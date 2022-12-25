@@ -1,9 +1,16 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
+
 //import products route
 const productRoutes = require("./api/routes/products");
 //import orders route
 const orderRoutes = require("./api/routes/orders");
+
+//use morgan before the routes
+//this specific one logs the request
+//like, if we sent a request to orders, it logs "GET /orders/"
+app.use(morgan("dev"));
 
 //products middleware
 //here I'm sending all requests to /products to the products route
@@ -11,6 +18,30 @@ const orderRoutes = require("./api/routes/orders");
 //I'll just write '/' there
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+
+//this is a middleware that handles all requests
+//it will be executed if none of the above routes are executed
+//so if I send a request to /orders, it will be handled by the orders route
+//but if I send a request to /orderss, it will be handled by this middleware
+
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+
+//this is a middleware that handles all errors
+//it will be executed if the above middleware is executed
+//this will fire for instance when operations related to the database fail
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
 
 // app.use((req, res, next) => {
 //   res.status(200).json({
