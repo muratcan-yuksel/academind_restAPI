@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
 
 //import products route
 const productRoutes = require("./api/routes/products");
@@ -11,6 +12,10 @@ const orderRoutes = require("./api/routes/orders");
 //this specific one logs the request
 //like, if we sent a request to orders, it logs "GET /orders/"
 app.use(morgan("dev"));
+//this parses the body of the request
+app.use(bodyParser.urlencoded({ extended: false }));
+//this will json data easily readable to us
+app.use(bodyParser.json());
 
 //products middleware
 //here I'm sending all requests to /products to the products route
