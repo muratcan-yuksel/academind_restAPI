@@ -3,7 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
-const connectDB = require("./db/connect");
+const connectDB = require("./api/db/connect");
 require("dotenv").config();
 
 //import products route
@@ -65,12 +65,6 @@ app.use((error, req, res, next) => {
     },
   });
 });
-
-// app.use((req, res, next) => {
-//   res.status(200).json({
-//     message: "It works!",
-//   });
-// });
 
 const port = process.env.PORT || 3000;
 
