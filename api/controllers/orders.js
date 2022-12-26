@@ -2,7 +2,8 @@ const Order = require("../models/orders");
 const asyncWrapper = require("../middleware/async");
 
 const getAllOrders = asyncWrapper(async (req, res) => {
-  const orders = await Order.find();
+  //populate is used to populate the product field with the product data
+  const orders = await Order.find().populate("product");
   res.status(200).json({ orders });
 });
 
@@ -16,7 +17,7 @@ const getOrder = asyncWrapper(async (req, res) => {
 
 const createOrder = asyncWrapper(async (req, res) => {
   const order = await Order.create(req.body);
-  res.status(201).json({ order });
+  res.status(201).json({ order, msg: ` ${order} stored` });
 });
 
 const updateOrder = asyncWrapper(async (req, res) => {
