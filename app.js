@@ -3,6 +3,8 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
+const connectDB = require("./db/connect");
+
 //import products route
 const productRoutes = require("./api/routes/products");
 //import orders route
@@ -18,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //handle cors
+//need to use it before routes
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
