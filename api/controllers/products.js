@@ -15,7 +15,11 @@ const getProduct = asyncWrapper(async (req, res) => {
 });
 
 const createProduct = asyncWrapper(async (req, res) => {
-  const product = await Product.create(req.body);
+  console.log(req.file);
+  const product = await Product.create({
+    ...req.body,
+    file: req.file.path,
+  });
   res.status(201).json({ product });
 });
 

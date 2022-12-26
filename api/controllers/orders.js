@@ -3,7 +3,9 @@ const asyncWrapper = require("../middleware/async");
 
 const getAllOrders = asyncWrapper(async (req, res) => {
   //populate is used to populate the product field with the product data
-  const orders = await Order.find().populate("product");
+  //the second argument is used to specify which fields to include
+  //if we don't specify the second argument, all fields will be included
+  const orders = await Order.find().populate("product", "name");
   res.status(200).json({ orders });
 });
 

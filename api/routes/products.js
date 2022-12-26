@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+//multer
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 const {
   getAllProducts,
@@ -9,7 +12,10 @@ const {
   deleteProduct,
 } = require("../controllers/products");
 
-router.route("/").get(getAllProducts).post(createProduct);
+router
+  .route("/")
+  .get(getAllProducts)
+  .post(upload.single("productImage"), createProduct);
 
 router.route("/:id").get(getProduct).patch(updateProduct).delete(deleteProduct);
 
