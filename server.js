@@ -10,6 +10,8 @@ require("dotenv").config();
 const productRoutes = require("./api/routes/products");
 //import orders route
 const orderRoutes = require("./api/routes/orders");
+//import users route
+const userRoutes = require("./api/routes/users");
 
 //use morgan before the routes
 //this specific one logs the request
@@ -41,6 +43,7 @@ app.use((req, res, next) => {
 //I'll just write '/' there
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/users", userRoutes);
 
 //this is a middleware that handles all requests
 //it will be executed if none of the above routes are executed
