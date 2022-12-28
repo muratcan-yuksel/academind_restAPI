@@ -22,6 +22,15 @@ const signup = asyncWrapper(async (req, res) => {
   });
 });
 
+//get users
+const getUsers = asyncWrapper(async (req, res) => {
+  const users = await User.find();
+  res.status(200).json({
+    users,
+  });
+});
+
 module.exports = {
   signup,
+  getUsers,
 };
